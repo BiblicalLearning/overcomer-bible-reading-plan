@@ -80,9 +80,6 @@ No installation, no dependencies, no accounts required. Just you and God's Word.
 **Organized by**: TheOvercomer.org  
 **Scripture**: King James Version (KJV) references
 
-## License
-
-[Your chosen license]
 
 ## Support
 
@@ -94,27 +91,3 @@ For questions, suggestions, or issues, please open an issue on GitHub.
 ```
 
 ---
-
-## **Short Tagline Options:**
-
-1. "Journey through Scripture in one year using the Hebrew alphabet as your guide"
-2. "365 days of Bible reading organized by the 22 Hebrew letters"
-3. "Discover Christ throughout all of Scripture with this Hebrew-letter-based reading plan"
-4. "A year-long Bible reading plan with progress tracking and Hebrew letter themes"
-
----
-
-## **GitHub Topics/Tags to Add:**
-```
-bible-reading-plan
-scripture
-hebrew-letters
-bible-study
-christian
-devotional
-reading-tracker
-progress-tracker
-bible-app
-web-app
-javascript
-html-css

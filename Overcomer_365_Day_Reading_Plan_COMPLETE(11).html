@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Overcomer's 365-Day Bible Reading Plan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #2c3e50; --secondary-color: #8b4513; --accent-color: #c0392b;
+            --background: #f8f9fa; --card-bg: #ffffff; --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d; --border-color: #e0e0e0; --success-color: #27ae60;
+            --header-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+        body {
+            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+            line-height: 1.6; color: var(--text-primary); background: var(--background); padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header {
+            background: var(--header-gradient); color: white; padding: 40px; border-radius: 15px;
+            margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); text-align: center;
+        }
+        header h1 { font-size: 2.5em; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        header p { font-size: 1.2em; opacity: 0.95; font-style: italic; }
+        .progress-bar-container {
+            background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .progress-info { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1em; }
+        .progress-bar {
+            width: 100%; height: 30px; background: #ecf0f1; border-radius: 15px; overflow: hidden; position: relative;
+        }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--success-color), #2ecc71);
+            transition: width 0.5s ease; border-radius: 15px;
+        }
+        .controls {
+            background: white; padding: 25px; border-radius: 12px; margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1); display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;
+        }
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em;
+            font-weight: 600; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-primary:hover { background: #34495e; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .btn-secondary { background: var(--secondary-color); color: white; }
+        .btn-secondary:hover { background: #a0522d; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .hebrew-section {
+            background: white; margin-bottom: 35px; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1); transition: all 0.3s ease;
+        }
+        .hebrew-section:hover { box-shadow: 0 5px 25px rgba(0,0,0,0.15); }
+        .section-header {
+            background: var(--header-gradient); color: white; padding: 25px 30px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; transition: background 0.3s ease;
+        }
+        .section-header:hover { background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%); }
+        .section-title { display: flex; align-items: center; gap: 20px; }
+        .hebrew-letter { font-size: 3em; font-weight: bold; line-height: 1; }
+        .section-info h2 { font-size: 1.8em; margin-bottom: 5px; }
+        .section-info p { opacity: 0.9; font-size: 1.1em; }
+        .toggle-icon { font-size: 1.5em; transition: transform 0.3s ease; }
+        .section-header.collapsed .toggle-icon { transform: rotate(-90deg); }
+        .section-content { padding: 30px; display: block; }
+        .section-content.collapsed { display: none; }
+        .section-description {
+            background: #f8f9fa; padding: 20px; border-left: 4px solid var(--accent-color);
+            margin-bottom: 25px; border-radius: 8px;
+        }
+        .section-description h3 { color: var(--accent-color); margin-bottom: 12px; font-size: 1.3em; }
+        .section-description ul { margin-left: 25px; margin-top: 10px; }
+        .section-description li { margin: 8px 0; }
+        .reading-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .reading-table th {
+            background: var(--primary-color); color: white; padding: 15px; text-align: left;
+            font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px;
+        }
+        .reading-table td { padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .reading-table tr:hover { background: #f8f9fa; }
+        .reading-table tr.completed { background: #e8f5e9; }
+        .day-number { font-weight: bold; color: var(--primary-color); font-size: 1.1em; }
+        .date-input {
+            padding: 8px 12px; border: 2px solid var(--border-color); border-radius: 6px;
+            font-size: 0.95em; transition: border-color 0.3s ease;
+        }
+        .date-input:focus { outline: none; border-color: var(--primary-color); }
+        .checkbox { width: 22px; height: 22px; cursor: pointer; accent-color: var(--success-color); }
+        .theme { font-style: italic; color: var(--text-secondary); }
+        .deep-focus {
+            display: inline-block; background: var(--accent-color); color: white; padding: 4px 10px;
+            border-radius: 5px; font-size: 0.85em; font-weight: 600; margin-left: 8px;
+        }
+        .footer {
+            text-align: center; padding: 30px; margin-top: 40px; background: white;
+            border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .footer p { color: var(--text-secondary); font-size: 1.1em; }
+        
+        /* Scripture Modal Styles */
+        .scripture-modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; 
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+        .scripture-modal-content {
+            background: white; margin: 3% auto; padding: 0; border-radius: 12px;
+            max-width: 900px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s ease;
+        }
+        .scripture-modal-header {
+            background: var(--header-gradient); color: white; padding: 25px 30px;
+            border-radius: 12px 12px 0 0; display: flex; justify-content: space-between; align-items: center;
+        }
+        .scripture-modal-header h2 { margin: 0; font-size: 1.8em; }
+        .scripture-modal-header .close {
+            color: white; font-size: 32px; font-weight: bold; cursor: pointer;
+            transition: transform 0.2s ease; line-height: 1; padding: 0 10px;
+        }
+        .scripture-modal-header .close:hover { transform: scale(1.2); }
+        .scripture-modal-body {
+            padding: 30px 40px; max-height: 70vh; overflow-y: auto;
+            font-size: 1.05em; line-height: 1.8;
+        }
+        .scripture-passage { margin-bottom: 35px; }
+        .scripture-passage-ref {
+            font-weight: bold; color: var(--accent-color); font-size: 1.3em;
+            margin-bottom: 15px; display: block; border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+        }
+        .scripture-verse { margin-bottom: 10px; }
+        .verse-num {
+            vertical-align: super; font-size: 0.75em; color: var(--accent-color);
+            font-weight: bold; margin-right: 3px;
+        }
+        .scripture-btn {
+            background: var(--accent-color); color: white; border: none; padding: 8px 16px;
+            border-radius: 6px; cursor: pointer; font-size: 0.9em; font-weight: 600;
+            transition: all 0.3s ease; white-space: nowrap;
+        }
+        .scripture-btn:hover {
+            background: #a0301f; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        @media print {
+            body { background: white; }
+            .controls, .progress-bar-container { display: none; }
+            .hebrew-section { page-break-inside: avoid; box-shadow: none; border: 1px solid var(--border-color); }
+            .section-content { display: block !important; }
+        }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            .reading-table { font-size: 0.9em; }
+            .reading-table th, .reading-table td { padding: 10px 8px; }
+            .controls { flex-direction: column; }
+            .btn { width: 100%; }
+        }
+    
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 0;
+            border-radius: 12px;
+            max-width: 900px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .close-btn {
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        .close-btn:hover {
+            color: #ddd;
+        }
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .passage {
+            margin-bottom: 30px;
+        }
+        .passage-ref {
+            color: var(--accent-color);
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .passage-text {
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+        .passage-text sup {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-right: 3px;
+        }
+        .scripture-btn {
+            padding: 8px 16px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .scripture-btn:hover {
+            background: #a0302a;
+            transform: translateY(-2px);
+        }
+    
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .header p {
+                font-size: 0.9em;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .controls button {
+                width: 100%;
+            }
+            
+            .hebrew-section {
+                margin-bottom: 20px;
+            }
+            
+            .section-header {
+                padding: 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .hebrew-letter {
+                font-size: 2em;
+            }
+            
+            .section-info h2 {
+                font-size: 1.3em;
+            }
+            
+            .section-info p {
+                font-size: 0.9em;
+            }
+            
+            .section-content {
+                padding: 15px 10px;
+            }
+            
+            .section-description {
+                padding: 15px;
+                font-size: 0.9em;
+            }
+            
+            /* Mobile Table Optimization */
+            .reading-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .reading-table thead {
+                display: none; /* Hide headers on mobile */
+            }
+            
+            .reading-table tbody {
+                display: block;
+            }
+            
+            .reading-table tr {
+                display: block;
+                margin-bottom: 20px;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 15px;
+                background: white;
+            }
+            
+            .reading-table td {
+                display: block;
+                padding: 8px 0;
+                border: none;
+                text-align: left;
+            }
+            
+            .reading-table td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                color: var(--primary-color);
+                display: block;
+                margin-bottom: 5px;
+                font-size: 0.85em;
+                text-transform: uppercase;
+            }
+            
+            .day-number {
+                font-size: 1.5em;
+                display: inline-block;
+                margin-bottom: 10px;
+            }
+            
+            .date-input {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .checkbox {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .theme {
+                font-size: 0.95em;
+                line-height: 1.5;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.3em;
+            }
+            
+            .hebrew-letter {
+                font-size: 1.5em;
+            }
+            
+            .section-info h2 {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>The Overcomer's 365-Day Bible Reading Plan</h1>
+            <p>"Who is he that overcometh the world, but he that believeth that Jesus is the Son of God?" — 1 John 5:5</p>
+        </header>
+
+        <div class="progress-bar-container">
+            <div class="progress-info">
+                <span><strong>Progress:</strong> <span id="progress-text">0 of 365 days (0%)</span></span>
+                <span><strong>Verses Read:</strong> <span id="verses-text">0</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="expandAll()">Expand All Sections</button>
+            <button class="btn btn-primary" onclick="collapseAll()">Collapse All Sections</button>
+            <button class="btn btn-secondary" onclick="saveProgress()">Save Progress</button>
+            <button class="btn btn-secondary" onclick="exportProgress()">📥 Export Progress</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import Progress</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProgress(event)">
+            <button class="btn btn-secondary" onclick="resetProgress()">Reset All</button>
+            <button class="btn btn-primary" onclick="window.print()">Print Plan</button>
+        </div>
+
+        <div id="reading-plan-container"></div>
+
+        <div class="footer">
+            <p><strong>The Overcomer's 365-Day Bible Reading Plan</strong></p>
+            <p>Based on the 22 Hebrew Letters • Organized by TheOvercomer.org</p>
+            <p style="margin-top: 15px; font-size: 0.95em;">✅ Your progress is automatically saved in your browser</p>
+            <p style="font-size: 0.9em; color: #7f8c8d;">💡 Use "Export Progress" to create a backup file that survives cache clearing</p>
+        </div>
+    </div>
+
+    <script>
+        // Complete 365-day reading plan data embedded in JavaScript
+        const READING_DATA = {
+            sections: [
+                {
+                    letter: "א", name: "Aleph", range: [1, 17],
+                    subtitle: "The Beginning • Genesis, Isaiah, Romans",
+                    description: "Aleph, the first Hebrew letter, symbolizes <strong>beginnings</strong> and God's primacy (Psalm 119:1–8, 'Blessed are the undefiled in the way'). It reflects Christ, the Alpha (Revelation 1:8), who initiates redemption (Genesis 3:15). Aleph reveals Christ's creation, the Church's foundation, and Satan's defeat (Romans 16:20).",
+                    reading: "Genesis 1–50, Isaiah 1–32, Romans 1–16",
+                    lookfor: "Christ as Creator, the Church's unity, Satan's testing (e.g., Genesis 3:15, Romans 16:20)",
+                    days: [
+                        [1, "Genesis 1:1–2:25; Isaiah 1:1–20; Romans 1:1–17", "The Beginning of the Gospel", 100],
+                        [2, "Genesis 3:1–24; Isaiah 1:21–2:5; Romans 1:18–32; Romans 16:20", "The Fall and Satan's Defeat", 100, "Overcoming Deception"],
+                        [3, "Genesis 4:1–26; Isaiah 2:6–22; Romans 2:1–16", "Sin's Spread, God's Judgment", 100],
+                        [4, "Genesis 5:1–32; Isaiah 3:1–26; Romans 2:17–29", "God's Lineage, True Circumcision", 100],
+                        [5, "Genesis 6:1–22; Isaiah 4:1–6; Romans 3:1–20", "Corruption and Righteousness", 100],
+                        [6, "Genesis 7:1–24; Isaiah 5:1–30; Romans 3:21–31", "Salvation by Faith", 100],
+                        [7, "Genesis 8:1–22; Isaiah 6:1–13; Romans 4:1–25", "Covenant and Abraham's Faith", 100],
+                        [8, "Genesis 9:1–29; Isaiah 7:1–25; Romans 5:1–21", "God's Promise, Christ's Grace", 100],
+                        [9, "Genesis 10:1–32; Isaiah 8:1–22; Romans 6:1–23", "Nations and New Life", 100],
+                        [10, "Genesis 11:1–32; Isaiah 9:1–21; Romans 7:1–25", "Babel and Law's Struggle", 100],
+                        [11, "Genesis 12:1–20; Isaiah 10:1–34; Romans 8:1–17", "Abraham's Call, Spirit's Freedom", 100],
+                        [12, "Genesis 13:1–18; Isaiah 11:1–16; Romans 8:18–39", "Lot's Choice, God's Victory", 100],
+                        [13, "Genesis 14:1–24; Isaiah 12:1–6; Romans 9:1–33", "Melchizedek, Israel's Election", 100],
+                        [14, "Genesis 15:1–21; Isaiah 13:1–22; Romans 10:1–21", "Covenant Faith, Salvation's Call", 100],
+                        [15, "Genesis 16:1–16; Isaiah 14:1–32; Romans 11:1–36", "Hagar, God's Mercy", 100],
+                        [16, "Genesis 17:1–27; Isaiah 15:1–9; Romans 12:1–21", "Circumcision, Living Sacrifice", 100],
+                        [17, "Genesis 18:1–33; Isaiah 16:1–14; Romans 13:1–14", "Intercession, Obedience to God", 100]
+                    ]
+                },
+                {
+                    letter: "ב", name: "Beth", range: [18, 34],
+                    subtitle: "The House • Joshua, Hosea, Hebrews",
+                    description: "Beth, meaning 'house' (Psalm 119:9–16, 'Wherewithal shall a young man cleanse his way?'), signifies God's dwelling. It points to Christ, who builds His Church (Matthew 16:18), and contrasts Satan's false church (Revelation 17:5).",
+                    reading: "Joshua, Hosea, Hebrews",
+                    lookfor: "Christ as Redeemer, the Church's warfare, Satan's wiles (e.g., Joshua 6:20, Joshua 7:21)",
+                    days: [
+                        [18, "Joshua 1:1–18; Hosea 1:1–11; Hebrews 1:1–14", "God's Commission to His Church", 100],
+                        [19, "Joshua 2:1–24; Hosea 2:1–13; Hebrews 2:1–18", "Rahab's Faith, Christ's Priesthood", 100],
+                        [20, "Joshua 2:1–24; Hosea 2:14–23; Hebrews 11:30–31; James 2:25", "Faith That Reveals Christ and His Church", 37, "Gentile Salvation"],
+                        [21, "Joshua 3:1–17; Hosea 3:1–5; Hebrews 3:1–19", "Crossing Jordan, Faithful Rest", 100],
+                        [22, "Joshua 4:1–24; Hosea 4:1–19; Hebrews 4:1–16", "Memorial Stones, God's Mercy", 100],
+                        [23, "Joshua 5:1–15; Hosea 5:1–15; Hebrews 5:1–14", "Circumcision, Christ's Priesthood", 100],
+                        [24, "Joshua 6:1–27; Hosea 6:1–11; Hebrews 6:1–20", "Jericho's Fall, Hope's Anchor", 100],
+                        [25, "Joshua 6:1–27; Hosea 6:1–11; Ephesians 6:10–18; Hebrews 12:18–29", "Warfare Through Obedience", 107, "Spiritual Victory"],
+                        [26, "Joshua 7:1–26; Hosea 7:1–16; Hebrews 7:1–28", "Achan's Sin, Melchizedek", 100],
+                        [27, "Joshua 8:1–35; Hosea 8:1–14; Hebrews 8:1–13", "Ai's Victory, New Covenant", 100],
+                        [28, "Joshua 9:1–27; Hosea 9:1–17; Hebrews 9:1–28", "Gibeon's Deceit, Christ's Blood", 100],
+                        [29, "Joshua 10:1–43; Hosea 10:1–15; Hebrews 10:1–39", "Sun Stands Still, Faith's Perseverance", 100],
+                        [30, "Joshua 11:1–23; Hosea 11:1–12; Hebrews 11:1–29", "Conquest, Faith's Heroes", 100],
+                        [31, "Joshua 12:1–24; Hosea 12:1–14; Hebrews 11:30–40", "Kings Defeated, Faith's Reward", 100],
+                        [32, "Joshua 13:1–33; Hosea 13:1–16; Hebrews 12:1–17", "Inheritance, God's Discipline", 100],
+                        [33, "Joshua 14:1–15; Hosea 14:1–9; Hebrews 12:18–29", "Caleb's Faith, Restoration", 100],
+                        [34, "Joshua 15:1–63; Hosea 14:1–9; Hebrews 13:1–25", "Judah's Lot, Brotherly Love", 100]
+                    ]
+                },
+                {
+                    letter: "ג", name: "Gimel", range: [35, 51],
+                    subtitle: "The Reward • Deuteronomy, Micah, Galatians",
+                    description: "Gimel, meaning 'camel' or 'reward' (Psalm 119:17–24, 'Deal bountifully with thy servant'), signifies God's provision. It reveals Christ as the Reward (Galatians 3:14), the Church as His heirs, and Satan's covetousness (Micah 2:2).",
+                    reading: "Deuteronomy, Micah, Galatians",
+                    lookfor: "Christ's blessing, the Church's inheritance, Satan's greed (e.g., Deuteronomy 6:5, Galatians 3:29)",
+                    days: [
+                        [35, "Deuteronomy 1:1–46; Micah 1:1–16; Galatians 1:1–24", "God's Law and Grace", 100],
+                        [36, "Deuteronomy 2:1–37; Micah 2:1–13; Galatians 2:1–21", "Wanderings, Justification by Faith", 100],
+                        [37, "Deuteronomy 3:1–29; Micah 3:1–12; Galatians 3:1–29", "Victories, Heirs with Christ", 100],
+                        [38, "Deuteronomy 4:1–49; Micah 4:1–13; Galatians 4:1–31", "Obedience, Sons of God", 100],
+                        [39, "Deuteronomy 5:1–33; Micah 5:1–15; Galatians 5:1–26", "Commandments, Spirit's Fruit", 100],
+                        [40, "Deuteronomy 6:1–25; Micah 6:1–16; Galatians 6:1–18", "Love God, Bear Burdens", 100],
+                        [41, "Deuteronomy 7:1–26; Micah 7:1–20; Galatians 6:1–18", "Holy War, God's Mercy", 100],
+                        [42, "Deuteronomy 8:1–20; Micah 7:1–20; Galatians 5:16–26", "Remember God, Walk in Spirit", 100],
+                        [43, "Deuteronomy 9:1–29; Micah 6:1–16; Galatians 4:1–31", "Rebellion, Heirs of Promise", 100],
+                        [44, "Deuteronomy 10:1–22; Micah 5:1–15; Galatians 3:1–29", "New Tablets, Abraham's Seed", 100],
+                        [45, "Deuteronomy 11:1–32; Micah 4:1–13; Galatians 2:1–21", "Blessings, Kingdom Peace", 100],
+                        [46, "Deuteronomy 12:1–32; Micah 3:1–12; Galatians 1:1–24", "Worship, Gospel Purity", 100],
+                        [47, "Deuteronomy 13:1–18; Micah 2:1–13; Galatians 5:1–26", "False Prophets, Liberty in Christ", 100],
+                        [48, "Deuteronomy 14:1–29; Micah 1:1–16; Galatians 6:1–18", "Tithes, Sow to Spirit", 100],
+                        [49, "Deuteronomy 15:1–23; Micah 7:1–20; Galatians 4:1–31", "Release, God's Faithfulness", 100],
+                        [50, "Deuteronomy 16:1–22; Micah 6:1–16; Galatians 3:1–29", "Feasts, Curse of Law", 100],
+                        [51, "Deuteronomy 17:1–20; Micah 5:1–15; Galatians 2:1–21", "Justice, Gospel Freedom", 100]
+                    ]
+                },
+                {
+                    letter: "ד", name: "Daleth", range: [52, 68],
+                    subtitle: "The Door • Judges, Joel, James",
+                    description: "Daleth, meaning 'door' (Psalm 119:25–32), represents Christ as the Door (John 10:9) and the Church as His gateway to salvation.",
+                    reading: "Judges, Joel, James",
+                    lookfor: "Christ as Judge and Deliverer, the Church's trials",
+                    days: [
+                        [52, "Judges 19:1–30; Joel 1:1–20; 1 John 5:1–21", "Levite's Concubine, Love Overcomes", 100],
+                        [53, "Judges 20:1–48; Joel 2:1–32; 2 John 1:1–13", "Israel's Civil War, Spirit Poured Out", 100],
+                        [54, "Judges 21:1–25; Joel 3:1–21; 3 John 1:1–14", "Benjamin Restored, Valley of Decision", 100],
+                        [55, "Ruth 1:1–22; Amos 1:1–15; Revelation 1:1–20", "Ruth's Loyalty, Christ the King", 100],
+                        [56, "Ruth 2:1–23; Amos 2:1–16; Revelation 2:1–29", "Boaz the Redeemer, Letters to Churches", 100],
+                        [57, "Ruth 3:1–18; Amos 3:1–15; Revelation 3:1–22", "Ruth's Request, Faithful Witness", 100],
+                        [58, "Ruth 4:1–22; Amos 4:1–13; Revelation 4:1–11", "Redemption Complete, Heavenly Worship", 100],
+                        [59, "1 Samuel 1:1–28; Amos 5:1–27; Revelation 5:1–14", "Hannah's Prayer, Worthy Lamb", 100],
+                        [60, "1 Samuel 2:1–36; Amos 6:1–14; Revelation 6:1–17", "Hannah's Song, Seals Opened", 100],
+                        [61, "1 Samuel 3:1–21; Amos 7:1–17; Revelation 7:1–17", "Samuel's Call, Sealed Servants", 100],
+                        [62, "1 Samuel 4:1–22; Amos 8:1–14; Revelation 8:1–13", "Ark Captured, Trumpets Sound", 100],
+                        [63, "1 Samuel 5:1–12; Amos 9:1–15; Revelation 9:1–21", "Dagon Falls, Locusts Released", 100],
+                        [64, "1 Samuel 6:1–21; Joel 1:1–20; Revelation 10:1–11", "Ark Returns, Little Book", 100],
+                        [65, "1 Samuel 7:1–17; Joel 2:1–32; Revelation 11:1–19", "Revival, Two Witnesses", 100],
+                        [66, "1 Samuel 8:1–22; Joel 3:1–21; Revelation 12:1–17", "Israel's King, Dragon's War", 100],
+                        [67, "1 Samuel 9:1–27; James 1:1–27; Revelation 13:1–18", "Saul Chosen, Beast Rises", 100],
+                        [68, "1 Samuel 10:1–27; James 2:1–26; Revelation 14:1–20", "Saul Anointed, Harvest Time", 100]
+                    ]
+                },
+                {
+                    letter: "ה", name: "He", range: [69, 85],
+                    subtitle: "Behold • Exodus, Amos, Luke",
+                    description: "He, meaning 'behold' (Psalm 119:33–40), signifies God's revelation. It reveals Christ as Intercessor (Hebrews 7:25).",
+                    reading: "Exodus, Amos, Luke",
+                    lookfor: "Christ's intercession, the Church's prayer",
+                    days: [
+                        [69, "Exodus 1:1–22; Amos 1:1–15; Luke 1:1–25", "God's Deliverance Begins", 100],
+                        [70, "Exodus 2:1–25; Amos 2:1–16; Luke 1:26–56", "Moses' Birth, Mary's Faith", 100],
+                        [71, "Exodus 3:1–22; Amos 3:1–15; Luke 1:57–80", "Burning Bush, John's Birth", 100],
+                        [72, "Exodus 4:1–31; Amos 4:1–13; Luke 2:1–20", "Moses' Call, Christ's Birth", 100],
+                        [73, "Exodus 5:1–23; Amos 5:1–27; Luke 2:21–52", "Pharaoh's Hardness, Jesus' Youth", 100],
+                        [74, "Exodus 6:1–30; Amos 6:1–14; Luke 3:1–22", "God's Promise, Repentance", 100],
+                        [75, "Exodus 7:1–25; Amos 7:1–17; Luke 3:23–38", "Plagues Begin, Christ's Lineage", 100],
+                        [76, "Exodus 8:1–32; Amos 8:1–14; Luke 4:1–30", "God's Power, Jesus' Temptation", 100],
+                        [77, "Exodus 9:1–35; Amos 9:1–15; Luke 4:31–44", "Plagues Intensify, Jesus' Authority", 100],
+                        [78, "Exodus 10:1–29; Amos 9:1–15; Luke 5:1–39", "Locusts, Restoration, New Wine", 100],
+                        [79, "Exodus 11:1–10; Amos 9:1–15; Luke 6:1–49", "Final Plague, Sermon on Mount", 100],
+                        [80, "Exodus 12:1–51; Amos 8:1–14; Luke 7:1–50", "Passover, Faith's Healing", 100],
+                        [81, "Exodus 13:1–22; Amos 7:1–17; Luke 8:1–25", "Firstborn, Parables of Faith", 100],
+                        [82, "Exodus 14:1–31; Amos 6:1–14; Luke 8:26–56", "Red Sea, Deliverance", 100],
+                        [83, "Exodus 15:1–27; Amos 5:1–27; Luke 9:1–36", "Song of Victory, Mission of Twelve", 100],
+                        [84, "Exodus 16:1–36; Amos 4:1–13; Luke 9:37–62", "Manna, Following Christ", 100],
+                        [85, "Exodus 17:1–16; Amos 3:1–15; Luke 10:1–24", "Intercession Defeats the Enemy", 100]
+                    ]
+                },
+                {
+                    letter: "ו", name: "Vav", range: [86, 101],
+                    subtitle: "The Hook • Leviticus, Obadiah, Mark",
+                    description: "Vav, meaning 'hook' (Psalm 119:41–48), signifies connection. It reveals Christ as Mediator (1 Timothy 2:5).",
+                    reading: "Leviticus, Obadiah, Mark",
+                    lookfor: "Christ's atonement, the Church's unity",
+                    days: [
+                        [86, "Leviticus 1:1–17; Obadiah 1:1–21; Mark 1:1–20", "Holiness and Christ's Ministry", 100],
+                        [87, "Leviticus 2:1–16; Obadiah 1:1–21; Mark 1:21–45", "Offerings, Jesus' Healing", 100],
+                        [88, "Leviticus 3:1–17; Obadiah 1:1–21; Mark 2:1–28", "Peace Offerings, Lord of Sabbath", 100],
+                        [89, "Leviticus 4:1–35; Obadiah 1:1–21; Mark 3:1–35", "Sin Offering, Christ's Family", 100],
+                        [90, "Leviticus 5:1–19; Obadiah 1:1–21; Mark 4:1–41", "Trespass Offering, Parables", 100],
+                        [91, "Leviticus 6:1–30; Obadiah 1:1–21; Mark 5:1–43", "Priestly Duties, Deliverance", 100],
+                        [92, "Leviticus 7:1–38; Obadiah 1:1–21; Mark 6:1–56", "Offerings, Miracles", 100],
+                        [93, "Leviticus 8:1–36; Obadiah 1:1–21; Mark 7:1–37", "Consecration, True Purity", 100],
+                        [94, "Leviticus 9:1–24; Obadiah 1:1–21; Mark 8:1–38", "Priesthood, Christ's Mission", 100],
+                        [95, "Leviticus 10:1–20; Obadiah 1:1–21; Mark 9:1–50", "Nadab's Sin, Humility", 100],
+                        [96, "Leviticus 11:1–47; Obadiah 1:1–21; Mark 10:1–52", "Cleanliness, Marriage", 100],
+                        [97, "Leviticus 12:1–8; Obadiah 1:1–21; Mark 11:1–33", "Purification, Triumphal Entry", 100],
+                        [98, "Leviticus 13:1–59; Obadiah 1:1–21; Mark 12:1–44", "Leprosy, Vineyard Parable", 100],
+                        [99, "Leviticus 14:1–57; Obadiah 1:1–21; Mark 13:1–37", "Cleansing, End Times", 100],
+                        [100, "Leviticus 15:1–33; Obadiah 1:1–21; Mark 14:1–72", "Uncleanness, Betrayal", 100],
+                        [101, "Leviticus 16:1–34; Obadiah 1:1–21; Mark 15:1–47", "Atonement, Crucifixion", 100]
+                    ]
+                },
+                {
+                    letter: "ז", name: "Zayin", range: [102, 117],
+                    subtitle: "The Weapon • Numbers, Jonah, Acts",
+                    description: "Zayin, meaning 'weapon' (Psalm 119:49–56), signifies God's Word as a sword.",
+                    reading: "Numbers, Jonah, Acts",
+                    lookfor: "Christ's guidance, the Church's mission",
+                    days: [
+                        [102, "Numbers 1:1–54; Jonah 1:1–17; Acts 1:1–26", "God's Order and Mission", 100],
+                        [103, "Numbers 2:1–34; Jonah 2:1–10; Acts 2:1–47", "Camp Order, Pentecost", 100],
+                        [104, "Numbers 3:1–51; Jonah 3:1–10; Acts 3:1–26", "Levites, Repentance", 100],
+                        [105, "Numbers 4:1–49; Jonah 4:1–11; Acts 4:1–37", "Service, Church Boldness", 100],
+                        [106, "Numbers 5:1–31; Jonah 1:1–17; Acts 5:1–42", "Purity, Persecution", 100],
+                        [107, "Numbers 6:1–27; Jonah 2:1–10; Acts 6:1–15", "Nazarite Vow, Deacons", 100],
+                        [108, "Numbers 7:1–89; Jonah 3:1–10; Acts 7:1–60", "Offerings, Stephen's Martyrdom", 100],
+                        [109, "Numbers 8:1–26; Jonah 4:1–11; Acts 8:1–40", "Lampstand, Philip's Mission", 100],
+                        [110, "Numbers 9:1–23; Jonah 1:1–17; Acts 9:1–43", "Passover, Saul's Conversion", 100],
+                        [111, "Numbers 10:1–36; Jonah 2:1–10; Acts 10:1–48", "Journey, Gentile Salvation", 100],
+                        [112, "Numbers 11:1–35; Jonah 3:1–10; Acts 11:1–30", "Complaints, Church Growth", 100],
+                        [113, "Numbers 12:1–16; Jonah 4:1–11; Acts 12:1–25", "Miriam's Sin, Deliverance", 100],
+                        [114, "Numbers 13:1–33; Jonah 1:1–17; Acts 13:1–52", "Spies, Paul's Mission", 100],
+                        [115, "Numbers 14:1–45; Jonah 2:1–10; Acts 14:1–28", "Rebellion, Perseverance", 100],
+                        [116, "Numbers 15:1–41; Jonah 3:1–10; Acts 15:1–41", "Laws, Jerusalem Council", 100],
+                        [117, "Numbers 16:1–50; Jonah 4:1–11; Acts 16:1–40", "Korah's Rebellion, Prison Praise", 100]
+                    ]
+                },
+                {
+                    letter: "ח", name: "Cheth", range: [118, 133],
+                    subtitle: "The Fence • Ruth, Nahum, 1 Corinthians",
+                    description: "Cheth, meaning 'fence' (Psalm 119:57–64), signifies God's protection.",
+                    reading: "Ruth, Nahum, 1 Corinthians",
+                    lookfor: "Christ's redemption, the Church's unity",
+                    days: [
+                        [118, "Ruth 1:1–22; Nahum 1:1–15; 1 Corinthians 1:1–31", "Redemption and Unity", 100],
+                        [119, "Ruth 2:1–23; Nahum 2:1–13; 1 Corinthians 2:1–16", "Boaz's Kindness, God's Wisdom", 100],
+                        [120, "Ruth 3:1–18; Nahum 3:1–19; 1 Corinthians 3:1–23", "Ruth's Faith, Building on Christ", 100],
+                        [121, "Ruth 4:1–22; Nahum 1:1–15; 1 Corinthians 4:1–21", "Kinsman-Redeemer, Faithful Stewards", 100],
+                        [122, "Ruth 1:1–22; Nahum 2:1–13; 1 Corinthians 5:1–13", "Naomi's Return, Church Purity", 100],
+                        [123, "Ruth 2:1–23; Nahum 3:1–19; 1 Corinthians 6:1–20", "Gleaning, Body as Temple", 100],
+                        [124, "Ruth 3:1–18; Nahum 1:1–15; 1 Corinthians 7:1–40", "Rest, Marriage in Christ", 100],
+                        [125, "Ruth 4:1–22; Nahum 2:1–13; 1 Corinthians 8:1–13", "Redemption, Liberty's Limits", 100],
+                        [126, "Ruth 1:1–22; Nahum 3:1–19; 1 Corinthians 9:1–27", "Bitterness, Gospel Freedom", 100],
+                        [127, "Ruth 2:1–23; Nahum 1:1–15; 1 Corinthians 10:1–33", "Provision, Avoid Idolatry", 100],
+                        [128, "Ruth 3:1–18; Nahum 2:1–13; 1 Corinthians 11:1–34", "Obedience, Lord's Supper", 100],
+                        [129, "Ruth 4:1–22; Nahum 3:1–19; 1 Corinthians 12:1–31", "Lineage, Spiritual Gifts", 100],
+                        [130, "Ruth 1:1–22; Nahum 1:1–15; 1 Corinthians 13:1–13", "Faithfulness, Love's Excellence", 100],
+                        [131, "Ruth 2:1–23; Nahum 2:1–13; 1 Corinthians 14:1–40", "Harvest, Orderly Worship", 100],
+                        [132, "Ruth 3:1–18; Nahum 3:1–19; 1 Corinthians 15:1–58", "Proposal, Resurrection", 100],
+                        [133, "Ruth 4:1–22; Nahum 1:1–15; 1 Corinthians 16:1–24", "Christ's Line, Steadfastness", 100]
+                    ]
+                },
+                {
+                    letter: "ט", name: "Teth", range: [134, 149],
+                    subtitle: "Goodness • 1 Samuel, Habakkuk, 2 Corinthians",
+                    description: "Teth, meaning 'goodness' (Psalm 119:65–72), signifies God's goodness.",
+                    reading: "1 Samuel, Habakkuk, 2 Corinthians",
+                    lookfor: "Christ's comfort, the Church's prayer",
+                    days: [
+                        [134, "1 Samuel 1:1–28; Habakkuk 1:1–17; 2 Corinthians 1:1–24", "Prayer and Comfort", 100],
+                        [135, "1 Samuel 2:1–36; Habakkuk 2:1–20; 2 Corinthians 2:1–17", "Hannah's Song, God's Justice", 100],
+                        [136, "1 Samuel 3:1–21; Habakkuk 3:1–19; 2 Corinthians 3:1–18", "Samuel's Call, Glory of Christ", 100],
+                        [137, "1 Samuel 4:1–22; Habakkuk 1:1–17; 2 Corinthians 4:1–18", "Ark Captured, Treasure in Jars", 100],
+                        [138, "1 Samuel 5:1–12; Habakkuk 2:1–20; 2 Corinthians 5:1–21", "Dagon's Fall, Reconciliation", 100],
+                        [139, "1 Samuel 6:1–21; Habakkuk 3:1–19; 2 Corinthians 6:1–18", "Ark Returned, Separation", 100],
+                        [140, "1 Samuel 7:1–17; Habakkuk 1:1–17; 2 Corinthians 7:1–16", "Revival, Godly Sorrow", 100],
+                        [141, "1 Samuel 8:1–22; Habakkuk 2:1–20; 2 Corinthians 8:1–24", "Israel's King, Generosity", 100],
+                        [142, "1 Samuel 9:1–27; Habakkuk 3:1–19; 2 Corinthians 9:1–15", "Saul Chosen, Cheerful Giving", 100],
+                        [143, "1 Samuel 10:1–27; Habakkuk 1:1–17; 2 Corinthians 10:1–18", "Saul Anointed, Spiritual Warfare", 100],
+                        [144, "1 Samuel 11:1–15; Habakkuk 2:1–20; 2 Corinthians 11:1–33", "Saul's Victory, Paul's Sufferings", 100],
+                        [145, "1 Samuel 12:1–25; Habakkuk 3:1–19; 2 Corinthians 12:1–21", "Samuel's Farewell, Thorn in Flesh", 100],
+                        [146, "1 Samuel 13:1–23; Habakkuk 1:1–17; 2 Corinthians 13:1–14", "Saul's Sin, Examine Yourselves", 100],
+                        [147, "1 Samuel 14:1–52; Habakkuk 2:1–20; 2 Corinthians 1:1–24", "Jonathan's Faith, Comfort", 100],
+                        [148, "1 Samuel 15:1–35; Habakkuk 3:1–19; 2 Corinthians 2:1–17", "Saul's Disobedience, Triumph", 100],
+                        [149, "1 Samuel 16:1–23; Habakkuk 1:1–17; 2 Corinthians 3:1–18", "David Anointed, Veil Removed", 100]
+                    ]
+                },
+                {
+                    letter: "י", name: "Yod", range: [150, 164],
+                    subtitle: "The Hand • 1 Samuel, Zephaniah, Ephesians",
+                    description: "Yod, meaning 'hand' (Psalm 119:73–80), signifies God's work.",
+                    reading: "1 Samuel, Zephaniah, Ephesians",
+                    lookfor: "Christ's victory, the Church's calling",
+                    days: [
+                        [150, "1 Samuel 17:1–58; Zephaniah 1:1–18; Ephesians 1:1–23", "Victory Over Giants", 100],
+                        [151, "1 Samuel 18:1–30; Zephaniah 2:1–15; Ephesians 2:1–22", "David's Friendship, Unity in Christ", 100],
+                        [152, "1 Samuel 19:1–24; Zephaniah 3:1–20; Ephesians 3:1–21", "Saul's Jealousy, Christ's Mystery", 100],
+                        [153, "1 Samuel 20:1–42; Zephaniah 1:1–18; Ephesians 4:1–32", "Jonathan's Covenant, Unity", 100],
+                        [154, "1 Samuel 21:1–15; Zephaniah 2:1–15; Ephesians 5:1–33", "David's Flight, Walk in Love", 100],
+                        [155, "1 Samuel 22:1–23; Zephaniah 3:1–20; Ephesians 6:1–24", "Cave of Adullam, Armor of God", 100],
+                        [156, "1 Samuel 23:1–29; Zephaniah 1:1–18; Ephesians 1:1–23", "David's Deliverance, Spiritual Blessings", 100],
+                        [157, "1 Samuel 24:1–22; Zephaniah 2:1–15; Ephesians 2:1–22", "Sparing Saul, Made Alive", 100],
+                        [158, "1 Samuel 25:1–44; Zephaniah 3:1–20; Ephesians 3:1–21", "Abigail's Wisdom, God's Power", 100],
+                        [159, "1 Samuel 26:1–25; Zephaniah 1:1–18; Ephesians 4:1–32", "Mercy to Saul, Unity in Spirit", 100],
+                        [160, "1 Samuel 27:1–12; Zephaniah 2:1–15; Ephesians 5:1–33", "David Among Philistines, Christ's Bride", 100],
+                        [161, "1 Samuel 28:1–25; Zephaniah 3:1–20; Ephesians 6:1–24", "Saul's Despair, Spiritual Armor", 100],
+                        [162, "1 Samuel 29:1–11; Zephaniah 1:1–18; Ephesians 1:1–23", "David's Rejection, God's Plan", 100],
+                        [163, "1 Samuel 30:1–31; Zephaniah 2:1–15; Ephesians 2:1–22", "Amalekites Defeated, Salvation", 100],
+                        [164, "1 Samuel 31:1–13; Zephaniah 3:1–20; Ephesians 3:1–21", "Saul's Death, God's Glory", 100]
+                    ]
+                },
+                {
+                    letter: "כ", name: "Kaph", range: [165, 180],
+                    subtitle: "The Palm • 2 Samuel, Haggai, Philippians",
+                    description: "Kaph, meaning 'palm' (Psalm 119:81–88), signifies God's covering.",
+                    reading: "2 Samuel, Haggai, Philippians",
+                    lookfor: "Christ's peace, the Church's joy",
+                    days: [
+                        [165, "2 Samuel 1:1–27; Haggai 1:1–15; Philippians 1:1–30", "Loyalty and Joy in Suffering", 100],
+                        [166, "2 Samuel 2:1–32; Haggai 2:1–23; Philippians 2:1–30", "David's Reign, Humility", 100],
+                        [167, "2 Samuel 3:1–39; Haggai 1:1–15; Philippians 3:1–21", "Abner's Death, Pressing Forward", 100],
+                        [168, "2 Samuel 4:1–12; Haggai 2:1–23; Philippians 4:1–23", "Ishbosheth's Fall, Contentment", 100],
+                        [169, "2 Samuel 5:1–25; Haggai 1:1–15; Philippians 1:1–30", "David's Coronation, Faithfulness", 100],
+                        [170, "2 Samuel 6:1–23; Haggai 2:1–23; Philippians 2:1–30", "Ark's Return, Christ's Example", 100],
+                        [171, "2 Samuel 7:1–29; Haggai 1:1–15; Philippians 3:1–21", "Davidic Covenant, Heavenly Goal", 100],
+                        [172, "2 Samuel 8:1–18; Haggai 2:1–23; Philippians 4:1–23", "Victories, Peace of God", 100],
+                        [173, "2 Samuel 9:1–13; Haggai 1:1–15; Philippians 1:1–30", "Mephibosheth's Kindness, Joy", 100],
+                        [174, "2 Samuel 10:1–19; Haggai 2:1–23; Philippians 2:1–30", "Ammon's Defeat, Unity", 100],
+                        [175, "2 Samuel 11:1–27; Haggai 1:1–15; Philippians 3:1–21", "David's Sin, Forget Past", 100],
+                        [176, "2 Samuel 12:1–31; Haggai 2:1–23; Philippians 4:1–23", "Nathan's Rebuke, Rejoice Always", 100],
+                        [177, "2 Samuel 13:1–39; Haggai 1:1–15; Philippians 1:1–30", "Amnon's Sin, Gospel Advance", 100],
+                        [178, "2 Samuel 14:1–33; Haggai 2:1–23; Philippians 2:1–30", "Absalom's Return, Lowliness", 100],
+                        [179, "2 Samuel 15:1–37; Haggai 1:1–15; Philippians 3:1–21", "Absalom's Conspiracy, Citizenship", 100],
+                        [180, "2 Samuel 16:1–23; Haggai 2:1–23; Philippians 4:1–23", "Ziba's Deceit, God's Strength", 100]
+                    ]
+                },
+                {
+                    letter: "ל", name: "Lamed", range: [181, 196],
+                    subtitle: "The Staff • 1 Kings, Zechariah, Colossians",
+                    description: "Lamed, meaning 'staff' (Psalm 119:89–96), signifies God's authority.",
+                    reading: "1 Kings, Zechariah, Colossians",
+                    lookfor: "Christ's sovereignty, the Church's submission",
+                    days: [
+                        [181, "1 Kings 1:1–53; Zechariah 1:1–21; Colossians 1:1–29", "God's Sovereignty and Reconciliation", 100],
+                        [182, "1 Kings 2:1–46; Zechariah 2:1–13; Colossians 2:1–23", "Solomon's Throne, Christ's Fullness", 100],
+                        [183, "1 Kings 3:1–28; Zechariah 3:1–10; Colossians 3:1–25", "Wisdom, New Life in Christ", 100],
+                        [184, "1 Kings 4:1–34; Zechariah 4:1–14; Colossians 4:1–18", "Solomon's Reign, Prayer", 100],
+                        [185, "1 Kings 5:1–18; Zechariah 5:1–11; Colossians 1:1–29", "Temple Prep, Christ's Preeminence", 100],
+                        [186, "1 Kings 6:1–38; Zechariah 6:1–15; Colossians 2:1–23", "Temple Built, Victory in Christ", 100],
+                        [187, "1 Kings 7:1–51; Zechariah 7:1–14; Colossians 3:1–25", "Furnishings, Heavenly Mind", 100],
+                        [188, "1 Kings 8:1–66; Zechariah 8:1–23; Colossians 4:1–18", "Temple Dedication, Fellowship", 100],
+                        [189, "1 Kings 9:1–28; Zechariah 9:1–17; Colossians 1:1–29", "God's Promise, Christ's Glory", 100],
+                        [190, "1 Kings 10:1–29; Zechariah 10:1–12; Colossians 2:1–23", "Queen of Sheba, Rooted in Christ", 100],
+                        [191, "1 Kings 11:1–43; Zechariah 11:1–17; Colossians 3:1–25", "Solomon's Fall, Set on Heaven", 100],
+                        [192, "1 Kings 12:1–33; Zechariah 12:1–14; Colossians 4:1–18", "Kingdom Divided, Prayerful Life", 100],
+                        [193, "1 Kings 13:1–34; Zechariah 13:1–9; Colossians 1:1–29", "Prophet's Sin, Cleansing", 100],
+                        [194, "1 Kings 14:1–31; Zechariah 14:1–21; Colossians 2:1–23", "Jeroboam's Fall, Christ's Kingdom", 100],
+                        [195, "1 Kings 15:1–34; Zechariah 1:1–21; Colossians 3:1–25", "Kings' Reigns, Holy Living", 100],
+                        [196, "1 Kings 16:1–34; Zechariah 2:1–13; Colossians 4:1–18", "Ahab's Rise, Faithful Witness", 100]
+                    ]
+                },
+                {
+                    letter: "מ", name: "Mem", range: [197, 212],
+                    subtitle: "Water • 2 Chronicles, Daniel, Philippians",
+                    description: "Mem, meaning 'water' (Psalm 119:97–104), signifies God's cleansing Word.",
+                    reading: "2 Chronicles, Daniel, Philippians",
+                    lookfor: "Christ's victory, the Church's faith",
+                    days: [
+                        [197, "2 Chronicles 1:1–17; Daniel 1:1–21; Philippians 1:1–30", "Wisdom and Faithfulness", 100],
+                        [198, "2 Chronicles 2:1–18; Daniel 2:1–49; Philippians 2:1–30", "Temple Prep, Christ's Humility", 100],
+                        [199, "2 Chronicles 3:1–17; Daniel 3:1–30; Philippians 3:1–21", "Temple Built, Press Toward Goal", 100],
+                        [200, "2 Chronicles 4:1–22; Daniel 4:1–37; Philippians 4:1–23", "Furnishings, God's Kingdom", 100],
+                        [201, "2 Chronicles 5:1–14; Daniel 5:1–31; Philippians 1:1–30", "Ark's Place, Handwriting on Wall", 100],
+                        [202, "2 Chronicles 6:1–42; Daniel 6:1–28; Philippians 2:1–30", "Solomon's Prayer, Daniel's Deliverance", 100],
+                        [203, "2 Chronicles 7:1–22; Daniel 7:1–28; Philippians 3:1–21", "God's Fire, Son of Man", 100],
+                        [204, "2 Chronicles 8:1–18; Daniel 8:1–27; Philippians 4:1–23", "Solomon's Works, Visions", 100],
+                        [205, "2 Chronicles 9:1–31; Daniel 9:1–27; Philippians 1:1–30", "Queen's Visit, Seventy Weeks", 100],
+                        [206, "2 Chronicles 10:1–19; Daniel 10:1–21; Philippians 2:1–30", "Kingdom Divided, Spiritual Warfare", 100],
+                        [207, "2 Chronicles 11:1–23; Daniel 11:1–45; Philippians 3:1–21", "Rehoboam's Reign, End Times", 100],
+                        [208, "2 Chronicles 12:1–16; Daniel 12:1–13; Philippians 4:1–23", "Egypt's Attack, Resurrection", 100],
+                        [209, "2 Chronicles 13:1–22; Daniel 1:1–21; Philippians 1:1–30", "Abijah's Victory, Faithfulness", 100],
+                        [210, "2 Chronicles 14:1–15; Daniel 2:1–49; Philippians 2:1–30", "Asa's Reform, God's Kingdom", 100],
+                        [211, "2 Chronicles 15:1–19; Daniel 3:1–30; Philippians 3:1–21", "Covenant Renewal, Fiery Furnace", 100],
+                        [212, "2 Chronicles 16:1–14; Daniel 4:1–37; Philippians 4:1–23", "Asa's Error, Nebuchadnezzar's Pride", 100]
+                    ]
+                },
+                {
+                    letter: "נ", name: "Nun", range: [213, 228],
+                    subtitle: "The Lamp • 1 Chronicles, Malachi, John",
+                    description: "Nun, meaning 'lamp' (Psalm 119:105–112), signifies God's guiding light.",
+                    reading: "1 Chronicles, Malachi, John",
+                    lookfor: "Christ as Light, the Church's witness",
+                    days: [
+                        [213, "1 Chronicles 1:1–54; Malachi 1:1–14; John 1:1–51", "God's Lineage and Light", 100],
+                        [214, "1 Chronicles 2:1–55; Malachi 2:1–17; John 2:1–25", "Genealogies, Christ's Zeal", 100],
+                        [215, "1 Chronicles 3:1–24; Malachi 3:1–18; John 3:1–36", "David's Line, New Birth", 100],
+                        [216, "1 Chronicles 4:1–43; Malachi 4:1–6; John 4:1–54", "Judah's Line, Living Water", 100],
+                        [217, "1 Chronicles 5:1–26; Malachi 1:1–14; John 5:1–47", "Reuben's Fall, Christ's Authority", 100],
+                        [218, "1 Chronicles 6:1–81; Malachi 2:1–17; John 6:1–71", "Levites, Bread of Life", 100],
+                        [219, "1 Chronicles 7:1–40; Malachi 3:1–18; John 7:1–53", "Tribes, Rivers of Water", 100],
+                        [220, "1 Chronicles 8:1–40; Malachi 4:1–6; John 8:1–59", "Benjamin's Line, Light of World", 100],
+                        [221, "1 Chronicles 9:1–44; Malachi 1:1–14; John 9:1–41", "Genealogies, Spiritual Sight", 100],
+                        [222, "1 Chronicles 10:1–14; Malachi 2:1–17; John 10:1–42", "Saul's Fall, Good Shepherd", 100],
+                        [223, "1 Chronicles 11:1–47; Malachi 3:1–18; John 11:1–57", "David's Mighty Men, Resurrection", 100],
+                        [224, "1 Chronicles 12:1–40; Malachi 4:1–6; John 12:1–50", "David's Army, Christ's Hour", 100],
+                        [225, "1 Chronicles 13:1–14; Malachi 1:1–14; John 13:1–38", "Ark Moved, Love One Another", 100],
+                        [226, "1 Chronicles 14:1–17; Malachi 2:1–17; John 14:1–31", "David's Fame, Comforter", 100],
+                        [227, "1 Chronicles 15:1–29; Malachi 3:1–18; John 15:1–27", "Ark Brought, True Vine", 100],
+                        [228, "1 Chronicles 16:1–43; Malachi 4:1–6; John 16:1–33", "David's Psalm, Overcome World", 100]
+                    ]
+                },
+                {
+                    letter: "ס", name: "Samekh", range: [229, 244],
+                    subtitle: "Support • 2 Kings, Jeremiah, 1 Timothy",
+                    description: "Samekh, meaning 'support' (Psalm 119:113–120), signifies God's upholding power.",
+                    reading: "2 Kings, Jeremiah, 1 Timothy",
+                    lookfor: "Christ's deliverance, the Church's steadfastness",
+                    days: [
+                        [229, "2 Kings 1:1–18; Jeremiah 1:1–19; 1 Timothy 1:1–20", "God's Judgment and Grace", 100],
+                        [230, "2 Kings 2:1–25; Jeremiah 2:1–37; 1 Timothy 2:1–15", "Elijah's Ascension, Prayer", 100],
+                        [231, "2 Kings 3:1–27; Jeremiah 3:1–25; 1 Timothy 3:1–16", "Moab's Defeat, Church Order", 100],
+                        [232, "2 Kings 4:1–44; Jeremiah 4:1–31; 1 Timothy 4:1–16", "Miracles, Sound Doctrine", 100],
+                        [233, "2 Kings 5:1–27; Jeremiah 5:1–31; 1 Timothy 5:1–25", "Naaman's Healing, Widows", 100],
+                        [234, "2 Kings 6:1–33; Jeremiah 6:1–30; 1 Timothy 6:1–21", "Elisha's Power, Godliness", 100],
+                        [235, "2 Kings 7:1–20; Jeremiah 7:1–34; 1 Timothy 1:1–20", "Siege Lifted, True Worship", 100],
+                        [236, "2 Kings 8:1–29; Jeremiah 8:1–22; 1 Timothy 2:1–15", "Shunammite's Land, Intercession", 100],
+                        [237, "2 Kings 9:1–37; Jeremiah 9:1–26; 1 Timothy 3:1–16", "Jehu's Anointing, Mystery of Godliness", 100],
+                        [238, "2 Kings 10:1–36; Jeremiah 10:1–25; 1 Timothy 4:1–16", "Ahab's Fall, False Doctrine", 100],
+                        [239, "2 Kings 11:1–21; Jeremiah 11:1–23; 1 Timothy 5:1–25", "Joash's Rise, Covenant", 100],
+                        [240, "2 Kings 12:1–21; Jeremiah 12:1–17; 1 Timothy 6:1–21", "Temple Repair, Contentment", 100],
+                        [241, "2 Kings 13:1–25; Jeremiah 13:1–27; 1 Timothy 1:1–20", "Elisha's Death, Pride", 100],
+                        [242, "2 Kings 14:1–29; Jeremiah 14:1–22; 1 Timothy 2:1–15", "Amaziah's Reign, Drought", 100],
+                        [243, "2 Kings 15:1–38; Jeremiah 15:1–21; 1 Timothy 3:1–16", "Kings' Fall, Jeremiah's Complaint", 100],
+                        [244, "2 Kings 16:1–20; Jeremiah 16:1–21; 1 Timothy 4:1–16", "Ahaz's Sin, No Marriage", 100]
+                    ]
+                },
+                {
+                    letter: "ע", name: "Ayin", range: [245, 260],
+                    subtitle: "The Eye • Psalms, Matthew, Colossians",
+                    description: "Ayin, meaning 'eye' (Psalm 119:121–128), signifies God's watchfulness.",
+                    reading: "Psalms, Matthew, Colossians",
+                    lookfor: "Christ's triumph, the Church's authority",
+                    days: [
+                        [245, "Psalm 68:1–35; Matthew 12:1–50; Colossians 1:1–29", "God's Triumph and Authority", 100],
+                        [246, "Psalm 69:1–36; Matthew 13:1–58; Colossians 2:1–23", "Suffering and Parables", 100],
+                        [247, "Psalm 70:1–5; Matthew 14:1–36; Colossians 3:1–25", "Deliverance, Heavenly Mind", 100],
+                        [248, "Psalm 71:1–24; Matthew 15:1–39; Colossians 4:1–18", "Trust, Compassion", 100],
+                        [249, "Psalm 72:1–20; Matthew 16:1–28; Colossians 1:1–29", "Messianic Reign, Christ's Church", 100],
+                        [250, "Psalm 73:1–28; Matthew 17:1–27; Colossians 2:1–23", "God's Goodness, Transfiguration", 100],
+                        [251, "Psalm 74:1–23; Matthew 18:1–35; Colossians 3:1–25", "Plea for Help, Forgiveness", 100],
+                        [252, "Psalm 75:1–10; Matthew 19:1–30; Colossians 4:1–18", "God's Judgment, Sacrifice", 100],
+                        [253, "Psalm 76:1–12; Matthew 20:1–34; Colossians 1:1–29", "God's Power, Service", 100],
+                        [254, "Psalm 77:1–20; Matthew 21:1–46; Colossians 2:1–23", "God's Wonders, Triumphal Entry", 100],
+                        [255, "Psalm 78:1–72; Matthew 22:1–46; Colossians 3:1–25", "Israel's History, Parables", 100],
+                        [256, "Psalm 79:1–13; Matthew 23:1–39; Colossians 4:1–18", "Lament, Hypocrisy Denounced", 100],
+                        [257, "Psalm 80:1–19; Matthew 24:1–51; Colossians 1:1–29", "Restoration, End Times", 100],
+                        [258, "Psalm 81:1–16; Matthew 25:1–46; Colossians 2:1–23", "Obedience, Judgment", 100],
+                        [259, "Psalm 82:1–8; Matthew 26:1–75; Colossians 3:1–25", "God's Justice, Betrayal", 100],
+                        [260, "Psalm 83:1–18; Matthew 27:1–66; Colossians 4:1–18", "Prayer for Deliverance, Crucifixion", 100]
+                    ]
+                },
+                {
+                    letter: "פ", name: "Pe", range: [261, 276],
+                    subtitle: "The Mouth • Job, Lamentations, 2 Timothy",
+                    description: "Pe, meaning 'mouth' (Psalm 119:129–136), signifies God's spoken Word.",
+                    reading: "Job, Lamentations, 2 Timothy",
+                    lookfor: "Christ's faithfulness, the Church's endurance",
+                    days: [
+                        [261, "Job 1:1–22; Lamentations 1:1–22; 2 Timothy 1:1–18", "Suffering and Faithfulness", 100],
+                        [262, "Job 2:1–13; Lamentations 2:1–22; 2 Timothy 2:1–26", "Trials, Soldier of Christ", 100],
+                        [263, "Job 3:1–26; Lamentations 3:1–66; 2 Timothy 3:1–17", "Lament, Scripture's Power", 100],
+                        [264, "Job 4:1–21; Lamentations 4:1–22; 2 Timothy 4:1–22", "Eliphaz's Speech, Preach the Word", 100],
+                        [265, "Job 5:1–27; Lamentations 5:1–22; 2 Timothy 1:1–18", "God's Discipline, Fear Not", 100],
+                        [266, "Job 6:1–30; Lamentations 1:1–22; 2 Timothy 2:1–26", "Job's Reply, Endurance", 100],
+                        [267, "Job 7:1–21; Lamentations 2:1–22; 2 Timothy 3:1–17", "Life's Hardship, God's Word", 100],
+                        [268, "Job 8:1–22; Lamentations 3:1–66; 2 Timothy 4:1–22", "Bildad's Counsel, Faithful Ministry", 100],
+                        [269, "Job 9:1–35; Lamentations 4:1–22; 2 Timothy 1:1–18", "God's Power, Bold Witness", 100],
+                        [270, "Job 10:1–22; Lamentations 5:1–22; 2 Timothy 2:1–26", "Job's Plea, Avoid Quarrels", 100],
+                        [271, "Job 11:1–20; Lamentations 1:1–22; 2 Timothy 3:1–17", "Zophar's Rebuke, Last Days", 100],
+                        [272, "Job 12:1–25; Lamentations 2:1–22; 2 Timothy 4:1–22", "God's Sovereignty, Finish Race", 100],
+                        [273, "Job 13:1–28; Lamentations 3:1–66; 2 Timothy 1:1–18", "Job's Defense, God's Calling", 100],
+                        [274, "Job 14:1–22; Lamentations 4:1–22; 2 Timothy 2:1–26", "Life's Brevity, Faithful Service", 100],
+                        [275, "Job 15:1–35; Lamentations 5:1–22; 2 Timothy 3:1–17", "Eliphaz's Charge, Scripture", 100],
+                        [276, "Job 16:1–22; Lamentations 1:1–22; 2 Timothy 4:1–22", "Job's Misery, Crown of Righteousness", 100]
+                    ]
+                },
+                {
+                    letter: "צ", name: "Tsaddi", range: [277, 292],
+                    subtitle: "Righteousness • Proverbs, Ezekiel, Titus",
+                    description: "Tsaddi, meaning 'righteousness' (Psalm 119:137–144), signifies God's justice.",
+                    reading: "Proverbs, Ezekiel, Titus",
+                    lookfor: "Christ's wisdom, the Church's godliness",
+                    days: [
+                        [277, "Proverbs 1:1–33; Ezekiel 1:1–28; Titus 1:1–16", "Wisdom and God's Glory", 100],
+                        [278, "Proverbs 2:1–22; Ezekiel 2:1–10; Titus 2:1–15", "Wisdom's Path, Godly Living", 100],
+                        [279, "Proverbs 3:1–35; Ezekiel 3:1–27; Titus 3:1–15", "Trust God, Good Works", 100],
+                        [280, "Proverbs 4:1–27; Ezekiel 4:1–17; Titus 1:1–16", "Wisdom's Way, Sound Doctrine", 100],
+                        [281, "Proverbs 5:1–23; Ezekiel 5:1–17; Titus 2:1–15", "Avoid Sin, Adorn Doctrine", 100],
+                        [282, "Proverbs 6:1–35; Ezekiel 6:1–14; Titus 3:1–15", "Dangers, Obedience", 100],
+                        [283, "Proverbs 7:1–27; Ezekiel 7:1–27; Titus 1:1–16", "Seduction, Judgment", 100],
+                        [284, "Proverbs 8:1–36; Ezekiel 8:1–18; Titus 2:1–15", "Wisdom's Call, Idolatry", 100],
+                        [285, "Proverbs 9:1–18; Ezekiel 9:1–11; Titus 3:1–15", "Wisdom vs. Folly, Marked", 100],
+                        [286, "Proverbs 10:1–32; Ezekiel 10:1–22; Titus 1:1–16", "Righteous Speech, God's Glory", 100],
+                        [287, "Proverbs 11:1–31; Ezekiel 11:1–25; Titus 2:1–15", "Integrity, New Heart", 100],
+                        [288, "Proverbs 12:1–28; Ezekiel 12:1–28; Titus 3:1–15", "Righteous Life, Exile", 100],
+                        [289, "Proverbs 13:1–25; Ezekiel 13:1–23; Titus 1:1–16", "Wise Son, False Prophets", 100],
+                        [290, "Proverbs 14:1–35; Ezekiel 14:1–23; Titus 2:1–15", "Wise Woman, Idolatry Judged", 100],
+                        [291, "Proverbs 15:1–33; Ezekiel 15:1–8; Titus 3:1–15", "Gentle Answer, Vine's Judgment", 100],
+                        [292, "Proverbs 16:1–33; Ezekiel 16:1–63; Titus 1:1–16", "God's Plans, Jerusalem's Sin", 100]
+                    ]
+                },
+                {
+                    letter: "ק", name: "Qoph", range: [293, 308],
+                    subtitle: "Back of Head • Ecclesiastes, Hosea, Philemon",
+                    description: "Qoph, meaning 'back of head' (Psalm 119:145–152), signifies God's nearness.",
+                    reading: "Ecclesiastes, Hosea, Philemon",
+                    lookfor: "Christ's purpose, the Church's restoration",
+                    days: [
+                        [293, "Ecclesiastes 1:1–18; Hosea 1:1–11; Philemon 1:1–25", "Vanity and Reconciliation", 100],
+                        [294, "Ecclesiastes 2:1–26; Hosea 2:1–23; Philemon 1:1–25", "Pleasure's Futility, Restoration", 100],
+                        [295, "Ecclesiastes 3:1–22; Hosea 3:1–5; Philemon 1:1–25", "Time's Purpose, Redeemed Love", 100],
+                        [296, "Ecclesiastes 4:1–16; Hosea 4:1–19; Philemon 1:1–25", "Oppression, Covenant Breach", 100],
+                        [297, "Ecclesiastes 5:1–20; Hosea 5:1–15; Philemon 1:1–25", "Fear God, Judgment", 100],
+                        [298, "Ecclesiastes 6:1–12; Hosea 6:1–11; Philemon 1:1–25", "Wealth's Vanity, Repentance", 100],
+                        [299, "Ecclesiastes 7:1–29; Hosea 7:1–16; Philemon 1:1–25", "Wisdom's Value, Deceit", 100],
+                        [300, "Ecclesiastes 8:1–17; Hosea 8:1–14; Philemon 1:1–25", "Obey God, Israel's Sin", 100],
+                        [301, "Ecclesiastes 9:1–18; Hosea 9:1–17; Philemon 1:1–25", "Death's Certainty, Punishment", 100],
+                        [302, "Ecclesiastes 10:1–20; Hosea 10:1–15; Philemon 1:1–25", "Folly's Harm, Sow Righteousness", 100],
+                        [303, "Ecclesiastes 11:1–10; Hosea 11:1–12; Philemon 1:1–25", "Generosity, God's Love", 100],
+                        [304, "Ecclesiastes 12:1–14; Hosea 12:1–14; Philemon 1:1–25", "Fear God, Israel's Sin", 100],
+                        [305, "Ecclesiastes 1:1–18; Hosea 13:1–16; Philemon 1:1–25", "Vanity, Redemption", 100],
+                        [306, "Ecclesiastes 2:1–26; Hosea 14:1–9; Philemon 1:1–25", "Pleasure, Return to God", 100],
+                        [307, "Ecclesiastes 3:1–22; Hosea 1:1–11; Philemon 1:1–25", "Seasons, God's Mercy", 100],
+                        [308, "Ecclesiastes 4:1–16; Hosea 2:1–23; Philemon 1:1–25", "Labor, Restored Love", 100]
+                    ]
+                },
+                {
+                    letter: "ר", name: "Resh", range: [309, 324],
+                    subtitle: "The Head • Song of Solomon, Joel, Hebrews",
+                    description: "Resh, meaning 'head' (Psalm 119:153–160), signifies God's authority.",
+                    reading: "Song of Solomon, Joel, Hebrews",
+                    lookfor: "Christ's love, the Church's intimacy",
+                    days: [
+                        [309, "Song of Solomon 1:1–17; Joel 1:1–20; Hebrews 1:1–14", "Love and Christ's Glory", 100],
+                        [310, "Song of Solomon 2:1–17; Joel 2:1–32; Hebrews 2:1–18", "Bride's Beauty, Christ's Priesthood", 100],
+                        [311, "Song of Solomon 3:1–11; Joel 3:1–21; Hebrews 3:1–19", "Seeking Love, Judgment Day", 100],
+                        [312, "Song of Solomon 4:1–16; Joel 1:1–20; Hebrews 4:1–16", "Love's Praise, Rest in Christ", 100],
+                        [313, "Song of Solomon 5:1–16; Joel 2:1–32; Hebrews 5:1–14", "Bride's Longing, Priesthood", 100],
+                        [314, "Song of Solomon 6:1–13; Joel 3:1–21; Hebrews 6:1–20", "Bride's Beauty, Hope's Anchor", 100],
+                        [315, "Song of Solomon 7:1–13; Joel 1:1–20; Hebrews 7:1–28", "Love's Desire, Melchizedek", 100],
+                        [316, "Song of Solomon 8:1–14; Joel 2:1–32; Hebrews 8:1–13", "Love's Strength, New Covenant", 100],
+                        [317, "Song of Solomon 1:1–17; Joel 3:1–21; Hebrews 9:1–28", "Love's Beginnings, Christ's Blood", 100],
+                        [318, "Song of Solomon 2:1–17; Joel 1:1–20; Hebrews 10:1–39", "Bride's Charm, Perseverance", 100],
+                        [319, "Song of Solomon 3:1–11; Joel 2:1–32; Hebrews 11:1–40", "Seeking, Faith's Heroes", 100],
+                        [320, "Song of Solomon 4:1–16; Joel 3:1–21; Hebrews 12:1–29", "Love's Beauty, Discipline", 100],
+                        [321, "Song of Solomon 5:1–16; Joel 1:1–20; Hebrews 13:1–25", "Bride's Search, Brotherly Love", 100],
+                        [322, "Song of Solomon 6:1–13; Joel 2:1–32; Hebrews 1:1–14", "Bride Found, Christ's Supremacy", 100],
+                        [323, "Song of Solomon 7:1–13; Joel 3:1–21; Hebrews 2:1–18", "Love's Dance, Redemption", 100],
+                        [324, "Song of Solomon 8:1–14; Joel 1:1–20; Hebrews 3:1–19", "Love's Seal, Faithful House", 100]
+                    ]
+                },
+                {
+                    letter: "ש", name: "Shin", range: [325, 340],
+                    subtitle: "The Teeth • Esther, Amos, James",
+                    description: "Shin, meaning 'teeth' (Psalm 119:161–168), signifies God's consuming Word.",
+                    reading: "Esther, Amos, James",
+                    lookfor: "Christ's providence, the Church's faith",
+                    days: [
+                        [325, "Esther 1:1–22; Amos 1:1–15; James 1:1–27", "Providence and Faith", 100],
+                        [326, "Esther 2:1–23; Amos 2:1–16; James 2:1–26", "Esther's Rise, Faith and Works", 100],
+                        [327, "Esther 3:1–15; Amos 3:1–15; James 3:1–18", "Haman's Plot, Tongue's Power", 100],
+                        [328, "Esther 4:1–17; Amos 4:1–13; James 4:1–17", "Mordecai's Plea, Humility", 100],
+                        [329, "Esther 5:1–14; Amos 5:1–27; James 5:1–20", "Esther's Courage, Prayer's Power", 100],
+                        [330, "Esther 6:1–14; Amos 6:1–14; James 1:1–27", "God's Timing, Trials' Joy", 100],
+                        [331, "Esther 7:1–10; Amos 7:1–17; James 2:1–26", "Haman's Fall, Faith's Deeds", 100],
+                        [332, "Esther 8:1–17; Amos 8:1–14; James 3:1–18", "Jews' Deliverance, Wisdom", 100],
+                        [333, "Esther 9:1–32; Amos 9:1–15; James 4:1–17", "Victory, Submit to God", 100],
+                        [334, "Esther 10:1–3; Amos 1:1–15; James 5:1–20", "Mordecai's Honor, Riches' Warning", 100],
+                        [335, "Esther 1:1–22; Amos 2:1–16; James 1:1–27", "Ahasuerus' Feast, Patience", 100],
+                        [336, "Esther 2:1–23; Amos 3:1–15; James 2:1–26", "Esther Chosen, Faith's Evidence", 100],
+                        [337, "Esther 3:1–15; Amos 4:1–13; James 3:1–18", "Haman's Envy, Godly Speech", 100],
+                        [338, "Esther 4:1–17; Amos 5:1–27; James 4:1–17", "Fasting, Resist Devil", 100],
+                        [339, "Esther 5:1–14; Amos 6:1–14; James 5:1–20", "Esther's Banquet, Prayer", 100],
+                        [340, "Esther 6:1–14; Amos 7:1–17; James 1:1–27", "God's Providence, Steadfastness", 100]
+                    ]
+                },
+                {
+                    letter: "ת", name: "Tav", range: [341, 365],
+                    subtitle: "The Mark • Nehemiah, Micah, Revelation",
+                    description: "Tav, meaning 'mark' (Psalm 119:169–176), signifies God's seal.",
+                    reading: "Nehemiah, Micah, Revelation",
+                    lookfor: "Christ's return, the Church's restoration",
+                    days: [
+                        [341, "Nehemiah 1:1–11; Micah 1:1–16; Revelation 1:1–20", "Restoration and Christ's Return", 100],
+                        [342, "Nehemiah 2:1–20; Micah 2:1–13; Revelation 2:1–29", "Rebuilding, Letters to Churches", 100],
+                        [343, "Nehemiah 3:1–32; Micah 3:1–12; Revelation 3:1–22", "Gates Repaired, Faithful Witness", 100],
+                        [344, "Nehemiah 4:1–23; Micah 4:1–13; Revelation 4:1–11", "Opposition, Heavenly Worship", 100],
+                        [345, "Nehemiah 5:1–19; Micah 5:1–15; Revelation 5:1–14", "Justice, Worthy Lamb", 100],
+                        [346, "Nehemiah 6:1–19; Micah 6:1–16; Revelation 6:1–17", "Wall Completed, Seals Opened", 100],
+                        [347, "Nehemiah 7:1–73; Micah 7:1–20; Revelation 7:1–17", "Census, Sealed Servants", 100],
+                        [348, "Nehemiah 8:1–18; Micah 1:1–16; Revelation 8:1–13", "Law Read, Trumpets", 100],
+                        [349, "Nehemiah 9:1–38; Micah 2:1–13; Revelation 9:1–21", "Confession, Locusts", 100],
+                        [350, "Nehemiah 10:1–39; Micah 3:1–12; Revelation 10:1–11", "Covenant, Little Book", 100],
+                        [351, "Nehemiah 11:1–36; Micah 4:1–13; Revelation 11:1–19", "Jerusalem Populated, Witnesses", 100],
+                        [352, "Nehemiah 12:1–47; Micah 5:1–15; Revelation 12:1–17", "Dedication, Dragon's War", 100],
+                        [353, "Nehemiah 13:1–31; Micah 6:1–16; Revelation 13:1–18", "Reforms, Beast's Rise", 100],
+                        [354, "Nehemiah 1:1–11; Micah 7:1–20; Revelation 14:1–20", "Prayer, Harvest", 100],
+                        [355, "Nehemiah 2:1–20; Micah 1:1–16; Revelation 15:1–8", "Wall's Start, Plagues", 100],
+                        [356, "Nehemiah 3:1–32; Micah 2:1–13; Revelation 16:1–21", "Gates, Bowls of Wrath", 100],
+                        [357, "Nehemiah 4:1–23; Micah 3:1–12; Revelation 17:1–18", "Resistance, Babylon's Fall", 100],
+                        [358, "Nehemiah 5:1–19; Micah 4:1–13; Revelation 18:1–24", "Oppression Ended, Babylon Judged", 100],
+                        [359, "Nehemiah 6:1–19; Micah 5:1–15; Revelation 19:1–21", "Wall Finished, Christ's Return", 100],
+                        [360, "Nehemiah 7:1–73; Micah 6:1–16; Revelation 20:1–15", "Order Restored, Judgment", 100],
+                        [361, "Nehemiah 8:1–18; Micah 7:1–20; Revelation 21:1–27", "Word Revives, New Jerusalem", 100],
+                        [362, "Nehemiah 9:1–38; Micah 1:1–16; Revelation 22:1–21", "Repentance, Eternal Life", 100],
+                        [363, "Nehemiah 10:1–39; Micah 2:1–13; Revelation 1:1–20", "Covenant Renewed, Christ's Glory", 100],
+                        [364, "Nehemiah 11:1–36; Micah 3:1–12; Revelation 2:1–29", "City Filled, Church's Call", 100],
+                        [365, "Nehemiah 12:1–47; Micah 4:1–13; Revelation 3:1–22", "Celebration, Faithful Overcomers", 100]
+                    ]
+                }
+            ]
+        };
+
+        // Scripture content for each day (displayed in modal popup)
+                // Scripture content for each day (displayed in modal popup)
+        
+
+        // Function to generate HTML for a section
+        function generateSectionHTML(section, collapsed = true) {
+            const collapsedClass = collapsed ? 'collapsed' : '';
+            let html = `
+                <div class="hebrew-section">
+                    <div class="section-header ${collapsedClass}" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            <span class="hebrew-letter">${section.letter}</span>
+                            <div class="section-info">
+                                <h2>${section.name} (Days ${section.range[0]}-${section.range[1]})</h2>
+                                <p>${section.subtitle}</p>
+                            </div>
+                        </div>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content ${collapsedClass}">
+                        <div class="section-description">
+                            <h3>The Significance of ${section.name} (${section.letter})</h3>
+                            <p>${section.description}</p>
+                            <ul>
+                                <li><strong>What Will Be Read:</strong> ${section.reading}</li>
+                                <li><strong>What to Look For:</strong> ${section.lookfor}</li>
+                            </ul>
+                        </div>
+                        <table class="reading-table">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Date</th>
+                                    <th>Scripture Reading</th>
+                                    <th>Theme / Spiritual Focus</th>
+                                    <th>📖</th>
+                                    <th>✓</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+            
+            section.days.forEach(day => {
+                const [dayNum, scripture, theme, verses, deep] = day;
+                const deepTag = deep ? `<span class="deep-focus">${deep}</span>` : '';
+                html += `
+                                <tr>
+                                    <td class="day-number">${dayNum}</td>
+                                    <td><input type="date" class="date-input" data-day="${dayNum}"></td>
+                                    <td>${scripture}</td>
+                                    <td class="theme">${theme}${deepTag}</td>
+                                    
+                                    <td><input type="checkbox" class="checkbox" data-day="${dayNum}" data-verses="${verses}"></td>
+                                </tr>`;
+            });
+            
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+            
+            return html;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('reading-plan-container');
+            
+            // Generate HTML for all sections
+            READING_DATA.sections.forEach((section, index) => {
+                // First section expanded, rest collapsed
+                container.innerHTML += generateSectionHTML(section, index > 0);
+            });
+            
+            loadProgress();
+            attachEventListeners();
+        });
+
+        // Attach event listeners
+        function attachEventListeners() {
+            document.querySelectorAll('.checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const row = this.closest('tr');
+                    if (this.checked) {
+                        row.classList.add('completed');
+                    } else {
+                        row.classList.remove('completed');
+                    }
+                    updateProgress();
+                    saveProgress();
+                });
+            });
+            
+            document.querySelectorAll('.date-input').forEach(input => {
+                input.addEventListener('change', saveProgress);
+            });
+        }
+
+        // Progress tracking functions
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const checked = document.querySelectorAll('.checkbox:checked');
+            const total = checkboxes.length;
+            const completed = checked.length;
+            const percentage = Math.round((completed / total) * 100);
+            
+            let totalVerses = 0;
+            checked.forEach(cb => {
+                totalVerses += parseInt(cb.dataset.verses || 100);
+            });
+            
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('progress-text').textContent = `${completed} of ${total} days (${percentage}%)`;
+            document.getElementById('verses-text').textContent = totalVerses.toLocaleString();
+        }
+
+        // Save/load progress
+        function loadProgress() {
+            const saved = localStorage.getItem('overcomerReadingPlan');
+            if (saved) {
+                const data = JSON.parse(saved);
+                
+                data.completed.forEach(day => {
+                    const checkbox = document.querySelector(`.checkbox[data-day="${day}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                        checkbox.closest('tr').classList.add('completed');
+                    }
+                });
+                
+                Object.entries(data.dates).forEach(([day, date]) => {
+                    const input = document.querySelector(`.date-input[data-day="${day}"]`);
+                    if (input) input.value = date;
+                });
+                
+                updateProgress();
+            }
+        }
+
+        function saveProgress() {
+            const completed = [];
+            const dates = {};
+            
+            document.querySelectorAll('.checkbox:checked').forEach(cb => {
+                completed.push(cb.dataset.day);
+            });
+            
+            document.querySelectorAll('.date-input').forEach(input => {
+                if (input.value) {
+                    dates[input.dataset.day] = input.value;
+                }
+            });
+            
+            localStorage.setItem('overcomerReadingPlan', JSON.stringify({
+                completed,
+                dates,
+                lastSaved: new Date().toISOString()
+            }));
+            
+            alert('Progress saved successfully!');
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                localStorage.removeItem('overcomerReadingPlan');
+                document.querySelectorAll('.checkbox').forEach(cb => {
+                    cb.checked = false;
+                    cb.closest('tr').classList.remove('completed');
+                });
+                document.querySelectorAll('.date-input').forEach(input => {
+                    input.value = '';
+                });
+                updateProgress();
+                alert('All progress has been reset.');
+            }
+        }
+
+        // Section toggle functions
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        function expandAll() {
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.classList.remove('collapsed');
+                header.nextElementSibling.classList.remove('collapsed');
+            });
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.classList.add('collapsed');
+                header.nextElementSibling.classList.add('collapsed');
+            });
+        }
+
+        // Export progress to downloadable JSON file
+        function exportProgress() {
+            const saved = localStorage.getItem('overcomerReadingPlan');
+            if (!saved) {
+                alert('No progress to export yet. Start checking off some days first!');
+                return;
+            }
+            
+            const data = JSON.parse(saved);
+            const exportData = {
+                ...data,
+                exportedDate: new Date().toISOString(),
+                planVersion: '1.0'
+            };
+            
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `overcomer-reading-plan-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Progress exported successfully! Keep this file safe to restore your progress later.');
+        }
+
+        // Import progress from JSON file
+        function importProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    // Validate the data
+                    if (!importedData.completed || !importedData.dates) {
+                        alert('❌ Invalid backup file. Please select a valid Overcomer Reading Plan backup.');
+                        return;
+                    }
+                    
+                    // Confirm before overwriting
+                    const currentData = localStorage.getItem('overcomerReadingPlan');
+                    if (currentData) {
+                        if (!confirm('⚠️ This will replace your current progress. Are you sure you want to continue?')) {
+                            return;
+                        }
+                    }
+                    
+                    // Remove export metadata before saving
+                    const cleanData = {
+                        completed: importedData.completed,
+                        dates: importedData.dates,
+                        lastSaved: new Date().toISOString()
+                    };
+                    
+                    localStorage.setItem('overcomerReadingPlan', JSON.stringify(cleanData));
+                    
+                    // Reload the page to reflect changes
+                    alert('✅ Progress imported successfully! The page will now reload.');
+                    location.reload();
+                    
+                } catch (error) {
+                    alert('❌ Error reading backup file. Please make sure it\'s a valid JSON file.');
+                    console.error('Import error:', error);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Reset the file input so the same file can be selected again
+            event.target.value = '';
+        }
+        
+        function initializeApp() {
+            const container = document.getElementById('reading-plan-container');
+            if (!container) {
+                console.error('Content container not found!');
+                return;
+            }
+            
+            let html = '';
+            READING_DATA.sections.forEach(section => {
+                html += generateSectionHTML(section);
+            });
+            container.innerHTML = html;
+            
+            attachEventListeners();
+            loadProgress();
+            updateProgress();
+        }
+
+        // Initialize the app when the page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initializeApp();
+        });
+    
+        
+        // Open scripture modal
+                
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('scripture-modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+    
+    <!-- Scripture Modal -->
+    
+    </body>
+</html>
